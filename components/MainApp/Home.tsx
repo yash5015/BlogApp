@@ -15,7 +15,6 @@ import Card from './Card';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import FloatingActionButton from './FloatingActionButton';
 import {
   useFocusEffect,
   useIsFocused,

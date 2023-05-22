@@ -5,7 +5,6 @@ import Interest from './MainApp/Interest';
 import Explore from './MainApp/Explore';
 import Saved from './MainApp/Saved';
 import Profile from './MainApp/Profile';
-import FloatingActionButton from './MainApp/FloatingActionButton';
 import Deatils from './MainApp/Deatils';
 
 const HomeRoute = () => <Home />;
@@ -70,7 +69,6 @@ const HomeMain = () => {
         inactiveColor="grey"
         onTabPress={handleTabs}
       />
-      {/* {index === 0 || activeTabs === 'Home' ? <FloatingActionButton /> : null} */}
     </>
   );
 };

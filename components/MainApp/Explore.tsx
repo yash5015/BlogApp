@@ -5,7 +5,6 @@ import {FontWeight} from '../FontWeight';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import Card from './Card';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import FloatingActionButton from './FloatingActionButton';
 const Explore = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const navigation = useNavigation();
