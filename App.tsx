@@ -1,5 +1,12 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  Alert,
+  PermissionsAndroid,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import Signup from './components/Signup';
 import Login from './components/Login';
 import ForgotPass from './components/ForgotPass';
@@ -12,9 +19,32 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import Interest from './components/MainApp/Interest';
 import Deatils from './components/MainApp/Deatils';
 import UploadBlog from './components/MainApp/UploadBlog';
+import {
+  notificationListner,
+  requestUserPermission,
+} from './components/src/Utils/NotificationServices';
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+  useEffect(() => {
+    if (Platform.OS == 'android') {
+      PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+      )
+        .then(res => {
+          console.log('PushNoti res', res);
+
+          if (!!res && res == 'granted') {
+            requestUserPermission();
+            notificationListner();
+          }
+        })
+        .catch(error => {
+          console.log('something went wrong', error);
+        });
+    } else {
+    }
+  }, []);
   return (
     <PaperProvider>
       <NavigationContainer>
