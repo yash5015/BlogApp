@@ -12,14 +12,47 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FontWeight} from './FontWeight';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 const Login = () => {
   const navigation = useNavigation();
+  const [GoogleUserData, setGoogleUserData] = useState('');
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
+
+  const googleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      //   setState({ userInfo });
+      console.log('userInfo', {userInfo});
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+        console.log(error);
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+        console.log(error);
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+        console.log(error);
+      } else {
+        // some other error happened
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <KeyboardAwareScrollView>
       <View>
@@ -100,7 +133,11 @@ const Login = () => {
                   </View>
 
                   <View style={styles.signButton}>
-                    <TouchableOpacity style={styles.GoogleButton}>
+                    <TouchableOpacity
+                      style={styles.GoogleButton}
+                      onPress={() => {
+                        googleLogin();
+                      }}>
                       <Image
                         style={styles.googleIconBtn}
                         source={{
@@ -110,6 +147,33 @@ const Login = () => {
                       <View style={styles.loginoption}>
                         <Text style={styles.GooglebtnText}>
                           Login with Google
+                        </Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.signButton}>
+                    <TouchableOpacity
+                      style={styles.GoogleButton}
+                      // onPress={() => {
+                      //   FaceBookLogin()
+                      //     .then(res => {
+                      //       console.log(res);
+                      //       setFBUserData(res.data);
+                      //     })
+                      //     .catch(error =>
+                      //       console.log('facebook login error-', error),
+                      //     );
+                      // }}
+                    >
+                      <Image
+                        style={styles.googleIconBtn}
+                        source={{
+                          uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/2021_Facebook_icon.svg/2048px-2021_Facebook_icon.svg.png',
+                        }}></Image>
+
+                      <View style={styles.loginoption}>
+                        <Text style={styles.GooglebtnText}>
+                          Login with Facebook
                         </Text>
                       </View>
                     </TouchableOpacity>
